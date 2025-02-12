@@ -60,7 +60,7 @@ const booksLibrary = {
   ]
   */
   
-  // ✅ Remove "The Hobbit"
+
   booksLibrary.removeBookByTitle("The Hobbit");
   console.log(booksLibrary.books);
   /* OUTPUT:
@@ -72,7 +72,7 @@ const booksLibrary = {
   ]
   */
   
-  // ✅ Get all book titles
+
   console.log("All Book Titles:", booksLibrary.getAllBooksByTitle());
   /* OUTPUT:
   All Book Titles: [
