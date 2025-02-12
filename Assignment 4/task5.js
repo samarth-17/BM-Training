@@ -1,6 +1,6 @@
 function processData(arr, callback) {
     console.log("Original Array:", arr);
-    return callback(arr); // Return the result of the callback function
+    return callback(arr); 
 }
 
 
