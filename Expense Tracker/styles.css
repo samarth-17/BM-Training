@@ -1,0 +1,51 @@
+/* // styles.css
+body {
+    font-family: Arial, sans-serif;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.input-section input, select, button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+}
+button {
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: darkblue;
+} */
+
+.input-box {
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the form elements */
+}
+
+.input-box input, .input-box select , .input-box button {
+    margin: 10px;
+    padding: 8px;
+    width: 250px; /* Ensures uniform input width */
+    font-size: 16px; /* Improves text readability */
+    border-radius: 9px;
+}
+
+select, #category {
+    margin: 10px;
+    padding: 8px;
+}
+
+#total-expense{
+    margin-top: 8%;
+    font-weight: 500;
+}
