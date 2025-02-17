@@ -1,0 +1,21 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+#input-box{
+  display: flex;
+  flex-direction: column;
+}
+
+#input-box input, #input-box select{
+  margin: 8px;
+  max-width: 400px;
+  height: 28px;
+}
+
+#subbuttn{
+  margin-top: 30%;
+}
