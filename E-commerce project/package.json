@@ -1,0 +1,12 @@
+{
+  "name": "e-commerce-project",
+  "version": "1.0.0",
+  "description": "[📽️ Tap here for E-Commerce Project](https://drive.google.com/file/d/1N4HjaY8NXyE9CvZ3okiMtUXeuMd5Nj-2/view?usp=sharing)",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
