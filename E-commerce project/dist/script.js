@@ -47,7 +47,7 @@ function getCategory() {
         const response = yield fetch('https://fakestoreapi.com/products/categories');
         console.log(response.status);
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`Status: ${response.status}`);
         }
         const categories = yield response.json();
         console.log(categories);
