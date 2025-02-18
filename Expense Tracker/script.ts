@@ -1,26 +1,24 @@
-interface Expense{
-    amount : number;
-    name : string;
-    category : string;
-    date : string;
-
+interface Expense {
+    amount: number;
+    name: string;
+    category: string;
+    date: string;
 }
 
-const expenseForm=document.getElementById("exp-f") as HTMLFormElement;
+const expenseForm = document.getElementById("exp-f") as HTMLFormElement;
 const expenseList = document.getElementById("expense-list") as HTMLUListElement;
-const totalExpense=document.getElementById("total-expense") as HTMLParagraphElement;
+const totalExpense = document.getElementById("total-expense") as HTMLParagraphElement;
 
 let expen: Expense[] = JSON.parse(localStorage.getItem("expenses") || "[]");
-let totalamnt :number=JSON.parse(localStorage.getItem("totalamnt") || "0");
-
+let totalamnt: number = JSON.parse(localStorage.getItem("totalAmount") || "0");
 
 const saveLocalStorage = () => {
     localStorage.setItem("expenses", JSON.stringify(expen));
-    localStorage.setItem("totalAmount", totalamnt.toString());
+    localStorage.setItem("totalAmount", totalamnt.toString());  
 };
 
 const loadExpenses = () => {
-    expenseList.innerHTML = ""; 
+    expenseList.innerHTML = "";
     expen.forEach(expense => {
         const listexpense = document.createElement("li");
         listexpense.className = "list-group-item d-flex justify-content-between align-items-start";
@@ -32,11 +30,11 @@ const loadExpenses = () => {
 
 loadExpenses();
 
-expenseForm.addEventListener("submit" , (exp)=>{
+expenseForm.addEventListener("submit", (exp) => {
     exp.preventDefault();
 
-    const amntval=document.getElementById("amount") as HTMLInputElement;
-    const expname=document.getElementById("expense-name") as HTMLInputElement;
+    const amntval = document.getElementById("amount") as HTMLInputElement;
+    const expname = document.getElementById("expense-name") as HTMLInputElement;
     const categoryInput = document.getElementById("category") as HTMLSelectElement;
     const dateInput = document.getElementById("datetime") as HTMLInputElement;
 
@@ -61,4 +59,4 @@ expenseForm.addEventListener("submit" , (exp)=>{
     expname.value = "";
     categoryInput.value = "";
     dateInput.value = "";
-})
+});
