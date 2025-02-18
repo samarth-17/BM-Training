@@ -1,0 +1,29 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#todocont {
+  display: flex;
+  gap: 12px; 
+  margin-bottom: 20px;
+}
+input {
+  width: 250px;
+  padding: 8px;
+}
+
+
+button {
+  padding: 8px 12px;
+}
+
+li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+li button {
+  margin-left: 10px;
+}
