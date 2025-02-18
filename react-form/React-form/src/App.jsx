@@ -29,7 +29,7 @@ function App() {
 
   return (
     <>
-      <div className="card">
+      <div>
         <form id="input-box" onSubmit={handlesubmit}>
           <input placeholder="First-Name" type="text" name="firstName" onChange={formfunc} value={formcontent.firstName}></input> 
           <input placeholder="Last-Name" type="text" name="lastName" onChange={formfunc} value={formcontent.lastName}></input>
