@@ -1,41 +1,39 @@
-import React, { createContext, useReducer, useCallback, useMemo, useContext } from "react";
+import React, { createContext, useReducer, useContext } from "react";
 
 const TaskContext = createContext();
 
-const taskReducer = (state, action) => {
-  switch (action.type) {
-    case "ADD_TASK":
-      return [...state, { id: Date.now(), text: action.payload, completed: false }];
-    case "REMOVE_TASK":
-      return state.filter(task => task.id !== action.payload);
-    case "TOGGLE_TASK":
-      return state.map(task =>
-        task.id === action.payload ? { ...task, completed: !task.completed } : task
-      );
-    default:
-      return state;
+const taskReducer = (tasks, action) => {
+  if (action.type === "ADD_TASK") {
+    return [...tasks, { id: Date.now(), text: action.text, completed: false }];
   }
+  if (action.type === "REMOVE_TASK") {
+    return tasks.filter(task => task.id !== action.id);
+  }
+  if (action.type === "TOGGLE_TASK") {
+    return tasks.map(task =>
+      task.id === action.id ? { ...task, completed: !task.completed } : task
+    );
+  }
+  return tasks;
 };
 
 const TaskProvider = ({ children }) => {
   const [tasks, dispatch] = useReducer(taskReducer, []);
 
-  const addTask = useCallback((text) => {
-    dispatch({ type: "ADD_TASK", payload: text });
-  }, []);
+  const addTask = (text) => {
+    dispatch({ type: "ADD_TASK", text });
+  };
 
-  const removeTask = useCallback((id) => {
-    dispatch({ type: "REMOVE_TASK", payload: id });
-  }, []);
+  const removeTask = (id) => {
+    dispatch({ type: "REMOVE_TASK", id });
+  };
 
-  const toggleTask = useCallback((id) => {
-    dispatch({ type: "TOGGLE_TASK", payload: id });
-  }, []);
-
-  const completedTasks = useMemo(() => tasks.filter(task => task.completed).length, [tasks]);
+  const toggleTask = (id) => {
+    dispatch({ type: "TOGGLE_TASK", id });
+  };
 
   return (
-    <TaskContext.Provider value={{ tasks, addTask, removeTask, toggleTask, completedTasks }}>
+    <TaskContext.Provider value={{ tasks, addTask, removeTask, toggleTask }}>
       {children}
     </TaskContext.Provider>
   );
