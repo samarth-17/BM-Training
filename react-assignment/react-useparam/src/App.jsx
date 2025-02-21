@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useSearchParams } from "react-router-dom";
 
 const SearchComponent = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [input, setInput] = useState("");
 
   const handleSearch = () => {
-    setSearchParams({ query: input }); 
+    setSearchParams({ query: input + " hello" }); 
   };
 
   return (
@@ -15,7 +15,7 @@ const SearchComponent = () => {
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder="Enter search text"
+        placeholder="Enter text"
       />
       <button onClick={handleSearch}>Search</button>
 
@@ -24,4 +24,14 @@ const SearchComponent = () => {
   );
 };
 
-export default SearchComponent;
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<SearchComponent />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
