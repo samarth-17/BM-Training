@@ -5,6 +5,8 @@ const initialState = {
   products: [],
   cart: [],
   selectedCategory: "",
+  user: null, 
+  categories: [], 
 };
 
 const reducer = (state, action) => {
@@ -16,9 +18,15 @@ const reducer = (state, action) => {
     case "ADD_TO_CART":
       return { ...state, cart: [...state.cart, action.payload] };
     case "REMOVE_FROM_CART":
-      return { ...state, cart: state.cart.filter(item => item.id !== action.payload) };
+      return { ...state, cart: state.cart.filter((item) => item.id !== action.payload) };
     case "SET_SELECTED_CATEGORY":
       return { ...state, selectedCategory: action.payload };
+    case "SET_USER":
+      return { ...state, user: action.payload }; // Store user details
+    case "LOGOUT":
+      return { ...state, user: null };
+    case "SET_CATEGORIES": 
+      return { ...state, categories: action.payload };
     default:
       return state;
   }
@@ -28,13 +36,12 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const categoriesRes = await axios.get("https://fakestoreapi.com/products/categories");
-        setCategories(categoriesRes.data);
+        dispatch({ type: "SET_CATEGORIES", payload: categoriesRes.data });
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -59,11 +66,7 @@ export const AppProvider = ({ children }) => {
     fetchProducts();
   }, [state.selectedCategory]);
 
-  return (
-    <AppContext.Provider value={{ state, dispatch, categories }}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>;
 };
 
 export const useAppContext = () => useContext(AppContext);
