@@ -1,19 +1,31 @@
-import { useState } from 'react'
-import './App.css'
-import { Button } from './components/ui/button'
-import Navbar from './components/Navbar'
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { CategoryProvider } from "@/context/CategoryContext";
+import { ProductProvider } from "@/context/ProductContext";
+import { CartProvider } from "@/context/CartContext";
+import Navbar from "@/components/Navbar";
+import Home from "@/components/Home";
+import Category from "@/components/Category";
+import ProductDetail from "@/components/ProductDetail";
+import Cart from "@/components/Cart";
+
+const router = createBrowserRouter([
+  { path: "/", element: <><Navbar /><Home /></> },
+  { path: "/category/:categoryType", element: <><Navbar /><Category /></> },
+  { path: "/product/:id", element: <><Navbar /><ProductDetail /></> },
+  { path: "/cart", element: <><Navbar /><Cart /></> }
+]);
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-    <Navbar/>
-      <h1 className='text-center text 2x1 text-blue-500'>E-commerce using shadcn</h1>
-      <Button variant="outline">Button</Button>
-
-    </>
-  )
+    <CategoryProvider>
+      <ProductProvider>
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
+      </ProductProvider>
+    </CategoryProvider>
+  );
 }
 
-export default App
+export default App;
