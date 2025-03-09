@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
-import useSearchStore from "@/store/useSearchStore"; // Import Zustand store
+import useSearchStore from "@/store/useSearchStore"; 
 import { Link } from "react-router-dom";
 
 import {
