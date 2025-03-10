@@ -1,12 +1,14 @@
+
 import * as React from "react";
-import { AppBar, Toolbar, IconButton, Typography, InputBase , Switch } from "@mui/material";
-import { Search as SearchIcon, Menu as MenuIcon, AccountCircle} from "@mui/icons-material";
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Switch } from "@mui/material";
+import { Search as SearchIcon, Menu as MenuIcon, AccountCircle } from "@mui/icons-material";
 import { styled, alpha } from "@mui/material/styles";
 import useSearchStore from "../store/useSearchStore"; 
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/useAuthStore";
 import { ThemeContext } from "@/context/ThemeContext";
 import { useContext } from "react";
+import { Button } from "./ui/button";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -42,16 +44,7 @@ export default function Navbar() {
   const { darkMode, toggleTheme } = useContext(ThemeContext);
   const { searchQuery, setSearchQuery } = useSearchStore(); 
   const { user } = useAuthStore(); 
-  const navigate=useNavigate();
-
-
-  const handleProfileClick = () => {
-    if (user && user.id) {
-      navigate(`/user/${user.id}`);
-    } else {
-      navigate("/login"); 
-    }
-  };
+  const navigate = useNavigate();
 
   return (
     <AppBar position="static" color="default" elevation={0}>
@@ -60,13 +53,14 @@ export default function Navbar() {
           <MenuIcon />
         </IconButton>
         <Typography
-         sx={{ flexGrow: 1, fontWeight: "bold", cursor: "pointer" }}
-         onClick={() => navigate("/products")}>
+          sx={{ flexGrow: 1, fontWeight: "bold", cursor: "pointer" }}
+          onClick={() => navigate("/products")}
+        >
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-          E-commerce
+            E-commerce
           </h4>
-         </Typography>
-         <Switch checked={darkMode} onChange={toggleTheme} />
+        </Typography>
+        <Switch checked={darkMode} onChange={toggleTheme} />
         <Search>
           <SearchIconWrapper>
             <SearchIcon />
@@ -78,7 +72,10 @@ export default function Navbar() {
             onChange={(e) => setSearchQuery(e.target.value)} 
           />
         </Search>
-        <IconButton color="inherit" onClick={handleProfileClick}>
+        <Button onClick={() => navigate("/add-product")}>
+          Add Product
+        </Button>
+        <IconButton color="inherit" onClick={()=>navigate(`/user/${user.id}`)}>
           <AccountCircle />
         </IconButton>
       </Toolbar>

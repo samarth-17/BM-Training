@@ -16,6 +16,8 @@ import DashhBoard from "./components/DashhBoard";
 import PostDetails from "./components/PostDetails";
 import PostDisplay from "./components/PostDisplay";
 import { ThemeProviderWrapper } from "./context/ThemeContext";
+import ProductForm from "./components/ProductForm";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +34,7 @@ function App() {
         <UserProvider>
           <Router>
             <Navbar />
+            <Toaster position="top-right" /> 
             <div className="flex">
               <Sidebar />
               <div className="container mx-auto p-4 ml-12">
@@ -41,6 +44,8 @@ function App() {
                   <Route path="/dashboard" element={<ProtectedRoute element={<DashhBoard />} />} />
                   <Route path="/products" element={<ProtectedRoute element={<AllProducts />} />} />
                   <Route path="/product/:id" element={<ProtectedRoute element={<ProductDetails />} />} />
+                  <Route path="/add-product" element={<ProtectedRoute element={<ProductForm />} />} />
+                  <Route path="/edit-product/:id" element={<ProtectedRoute element={<ProductForm />} />} />
                   <Route path="/users" element={<ProtectedRoute element={<User />} />} />
                   <Route path="/user/:id" element={<ProtectedRoute element={<UserDetails />} />} />
                   <Route path="/cart" element={<ProtectedRoute element={<Cart />} />} />
