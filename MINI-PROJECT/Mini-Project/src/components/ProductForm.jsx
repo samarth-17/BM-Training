@@ -19,11 +19,11 @@ const ProductForm = () => {
     formState: { errors },
   } = useForm();
 
-  // Fetch existing product if in edit mode
+
   const { data: product } = useQuery({
     queryKey: ["product", id],
     queryFn: () => fetchProductsById(id),
-    enabled: !!id, // Only fetch if id exists
+    enabled: !!id, 
   });
 
   useEffect(() => {
