@@ -18,6 +18,7 @@ import PostDisplay from "./components/PostDisplay";
 import { ThemeProviderWrapper } from "./context/ThemeContext";
 import ProductForm from "./components/ProductForm";
 import { Toaster } from "react-hot-toast";
+import AdminCart from "./components/AdminCart";
 
 const queryClient = new QueryClient();
 
@@ -48,7 +49,8 @@ function App() {
                   <Route path="/edit-product/:id" element={<ProtectedRoute element={<ProductForm />} />} />
                   <Route path="/users" element={<ProtectedRoute element={<User />} />} />
                   <Route path="/user/:id" element={<ProtectedRoute element={<UserDetails />} />} />
-                  <Route path="/cart" element={<ProtectedRoute element={<Cart />} />} />
+                  <Route path="/admin/carts" element={<AdminCart />} />
+                  <Route path="/cart" element={<AdminCart />} />
                   <Route path="/posts" element={<ProtectedRoute element={<PostDisplay />} />} />
                   <Route path="/posts/:id" element={<ProtectedRoute element={<PostDetails />} />} />
 

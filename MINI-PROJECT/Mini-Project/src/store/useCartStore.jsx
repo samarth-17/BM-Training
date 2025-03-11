@@ -1,37 +1,49 @@
 import { create } from "zustand";
-import { fetchCart, addToCart, deleteCart } from "../api/CartApi";
 
 const useCartStore = create((set) => ({
-  cart: [],
-  totalPrice: 0,
+  allCarts: [],
 
-  fetchCart: async (userId) => {
-    const { cartItems, total } = await fetchCart(userId);
-    set({ cart: cartItems, totalPrice: total });
+  fetchAllCarts: async () => {
+    const response = await fetch("https://dummyjson.com/carts");
+    const data = await response.json();
+    set({ allCarts: data.carts });
   },
 
-  addToCart: async (userId, products) => {
-    const newProducts = await addToCart(userId, products);
-    set((state) => {
-      const updatedCart = [...state.cart, ...newProducts];
-      const updatedTotal = updatedCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-      return { cart: updatedCart, totalPrice: updatedTotal };
+  addToUserCart: async (userId, products) => {
+    const response = await fetch("https://dummyjson.com/carts/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, products }),
     });
+    const newCart = await response.json();
+    set((state) => ({ allCarts: [...state.allCarts, newCart] }));
   },
 
-  removeFromCart: (productId) => {
-    set((state) => {
-      const updatedCart = state.cart.filter((item) => item.id !== productId);
-      const updatedTotal = updatedCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-      return { cart: updatedCart, totalPrice: updatedTotal };
+  updateCart: async (cartId, product) => {
+    const response = await fetch(`https://dummyjson.com/carts/${cartId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        merge: true,
+        products: [product],
+      }),
     });
+    const updatedCart = await response.json();
+    set((state) => ({
+      allCarts: state.allCarts.map((cart) =>
+        cart.id === cartId ? updatedCart : cart
+      ),
+    }));
   },
 
-  deleteCart: async (userId) => {
-    const success = await deleteCart(userId);
-    if (success) {
-      set({ cart: [], totalPrice: 0 });
-    }
+  removeCart: async (cartId) => {
+    const response = await fetch(`https://dummyjson.com/carts/${cartId}`, {
+      method: "DELETE",
+    });
+    await response.json();
+    set((state) => ({
+      allCarts: state.allCarts.filter((cart) => cart.id !== cartId),
+    }));
   },
 }));
 
