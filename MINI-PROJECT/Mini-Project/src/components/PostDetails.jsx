@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import useAuthStore from "../store/useAuthStore"; // Import Zustand auth store
+import useAuthStore from "../store/useAuthStore"; 
 import { 
   Container, Typography, Card, CardContent, TextField, Button, CircularProgress, Paper, Divider 
 } from "@mui/material";
@@ -13,8 +13,8 @@ const PostDetails = () => {
   const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { user } = useAuthStore(); // Get logged-in user from Zustand
-  const userId = user?.id;  // Ensure we have the correct user ID
+  const { user } = useAuthStore(); 
+  const userId = user?.id; 
 
   useEffect(() => {
     axios.get(`https://dummyjson.com/posts/${id}`)
@@ -51,7 +51,7 @@ const PostDetails = () => {
         const response = await axios.post("https://dummyjson.com/comments/add", {
           body: newComment,
           postId: Number(id),
-          userId: Number(userId), // Now using Zustand's user ID
+          userId: Number(userId), 
         });
 
         setComments([...comments, response.data]);
@@ -77,7 +77,6 @@ const PostDetails = () => {
             </CardContent>
           </Card>
 
-          {/* Comments Section */}
           <Paper sx={{ p: 3, boxShadow: 2, borderRadius: 2 }}>
             <Typography variant="h5" fontWeight="bold" gutterBottom>
               💬 Comments
@@ -97,11 +96,10 @@ const PostDetails = () => {
               ))
             ) : (
               <Typography variant="body2" color="text.secondary">
-                No comments yet. Be the first to comment!
+                No comments yet
               </Typography>
             )}
 
-            {/* Add Comment Input */}
             {userId ? (
               <>
                 <TextField
