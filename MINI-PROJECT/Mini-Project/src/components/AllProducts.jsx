@@ -1,9 +1,10 @@
-import React, { useContext, useReducer } from "react";
-import { ProductContext } from "../context/ProductContext";
+import React, { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import useSearchStore from "../store/useSearchStore";
 import useCartStore from "../store/useCartStore";
+import useAuthStore from "@/store/useAuthStore";
+import useProductStore from "../store/useProductStore"; 
 
 const sortReducer = (state, action) => {
   switch (action.type) {
@@ -15,19 +16,27 @@ const sortReducer = (state, action) => {
 };
 
 const AllProducts = () => {
-  const { products, isLoading, error } = useContext(ProductContext);
   const navigate = useNavigate();
   const { searchQuery } = useSearchStore();
-  const { addToCart } = useCartStore();
+  const { addToUserCart } = useCartStore();
+  const { userId } = useAuthStore();
+
+  const { products, isLoading, error, fetchProducts } = useProductStore();
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const [state, dispatch] = useReducer(sortReducer, { sortOrder: "asc" });
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>;
 
+
   const filteredProducts = products.filter((prod) =>
     prod.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
 
   const sortedProducts = filteredProducts.sort((a, b) =>
     state.sortOrder === "asc" ? a.price - b.price : b.price - a.price
@@ -63,14 +72,14 @@ const AllProducts = () => {
               <Button
                 className="p-2 m-4"
                 onClick={() => {
-                  addToCart(1, [{ id: prod.id, quantity: 1 }]);
-                  navigate("/cart");
+                  addToUserCart(userId, [{ id: prod.id, quantity: 1 }]);
+                  navigate("/carts");
                 }}
               >
                 Add To Cart
               </Button>
-              <Button  className="p-2 m-4 " onClick={() => navigate(`/edit-product/${prod.id}`)}>
-              Edit
+              <Button className="p-2 m-4" onClick={() => navigate(`/edit-product/${prod.id}`)}>
+                Edit
               </Button>
             </div>
           </li>

@@ -1,11 +1,12 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserById } from "@/api/UserApi";
-import { useParams } from "react-router-dom";
-import { Card, CardContent, CardHeader, Avatar, Typography, CircularProgress, Box } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
+import { Card, CardContent, CardHeader, Avatar, Typography, CircularProgress, Box, Button } from "@mui/material";
 
 export function UserDetails() {
   const { id } = useParams();
+  const navigate=useNavigate();
   const { data: user, isLoading, error } = useQuery({
     queryKey: ["user", id],
     queryFn: () => fetchUserById(id),
@@ -49,6 +50,11 @@ export function UserDetails() {
         <Typography><strong>Gender:</strong> {user.gender}</Typography>
         <Typography><strong>Phone:</strong> {user.phone}</Typography>
         <Typography><strong>Birth Date:</strong> {user.birthDate}</Typography>
+        <Button
+            onClick={() => navigate(`/user/${id}/edit`)}
+          >
+            Edit User
+          </Button>
       </CardContent>
     </Card>
   );

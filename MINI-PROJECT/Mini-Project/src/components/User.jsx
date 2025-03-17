@@ -14,8 +14,7 @@ import {
 } from "@/components/ui/table";
 
 export function User() {
-  const context = useContext(UserContext);
-  const { users, isLoading, error } = context;
+  const { users, isLoading, error } =  useContext(UserContext);
   const { searchQuery } = useSearchStore();
 
   if (isLoading) return <p>Loading...</p>;
